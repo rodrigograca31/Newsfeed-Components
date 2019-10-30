@@ -99,16 +99,59 @@ const data = [
     <span class='expandButton'></span>
   </div>
 
-  Hint: You will need to use createElement more than once here!
 
   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
 
-  Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
-
-  Step 3: return the entire component.
-
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
-
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+
+function createArticle(item) {
+	const { title, date, firstParagraph: p1, secondParagraph: p2, thirdParagraph: p3 } = item;
+	// 1- Create HTML markup
+	const article = document.createElement('div');
+	const articleH2 = document.createElement('h2');
+	const articleDate = document.createElement('p');
+	const articleP1 = document.createElement('p');
+	const articleP2 = document.createElement('p');
+	const articleP3 = document.createElement('p');
+	const articleBtn = document.createElement('span');
+
+	// 2- Define HTML structure
+	article.append(articleH2, articleDate, articleP1, articleP2, articleP3, articleBtn);
+
+	// 3- Add some class names
+	article.classList.add("article");
+	articleDate.classList.add("date");
+	articleBtn.classList.add("expandButton");
+
+	// 4- Add some content!
+	articleH2.innerText = title;
+	articleDate.innerText = date;
+	articleP1.innerText = p1;
+	articleP2.innerText = p2;
+	articleP3.innerText = p3;
+
+	articleBtn.innerText = "Read More";
+
+	// 5- Add functionality
+	articleBtn.addEventListener('click', event => {
+		article.classList.toggle('article-open');
+	});
+
+	return article;
+}
+
+const articleContainer = document.querySelector('.articles');
+
+data.push({
+	title: "Rodrigo joins Lambda",
+	date: "30-09-2019",
+	firstParagraph: "He joined!",
+	secondParagraph: "Other people joined",
+	thirdParagraph: "There was teatchers",
+});
+
+data.forEach((item) => {
+	articleContainer.append(createArticle(item));
+});
