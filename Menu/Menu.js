@@ -1,12 +1,12 @@
 /* This is the data we will be using, study it but don't change anything, yet. */
 
 let menuItems = [
-  'Students',
-  'Faculty',
-  "What's New",
-  'Tech Trends',
-  'Music',
-  'Log Out'
+	'Students',
+	'Faculty',
+	"What's New",
+	'Tech Trends',
+	'Music',
+	'Log Out'
 ];
 
 /* 
@@ -23,7 +23,7 @@ let menuItems = [
 
 
 function createItem(items) {
-	
+
 	const menu = document.createElement('div');
 	const ul = document.createElement('ul');
 
@@ -42,7 +42,28 @@ function createItem(items) {
 
 	// 5- Add functionality
 	document.querySelector(".menu-button").addEventListener('click', event => {
-		menu.classList.toggle('menu--open');
+		// if (!menu.classList.contains('menu--open')) {
+		// 	menu.classList.add('menu--open');
+		// 	TweenLite.to(menu, 0.5, { opacity: 1});
+		// } else {
+		// 	TweenLite.to(menu, 0.5, { opacity: 0, onComplete: () => menu.classList.remove('menu--open') });
+		// }
+
+		
+
+		if (!menu.classList.contains('menu--open')) {
+			menu.classList.add('menu--open'); 
+			TweenLite.to(menu, 0.5, { left: 0 });
+		} else {
+			TweenLite.to(menu, 0.5, { left: "-350px", onComplete: () => menu.classList.remove('menu--open') });
+		}
+	});
+
+	document.querySelector("*").addEventListener("click", event => {
+		// click anywhere but not in the open button it closes the menu
+		if (!event.target.classList.contains("menu-button")) {
+			TweenLite.to(menu, 0.5, { left: "-350px", onComplete: () => menu.classList.remove('menu--open') });
+		}
 	});
 
 	return menu;

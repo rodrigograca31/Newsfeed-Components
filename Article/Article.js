@@ -110,6 +110,7 @@ function createArticle(item) {
 	const { title, date, firstParagraph: p1, secondParagraph: p2, thirdParagraph: p3 } = item;
 	// 1- Create HTML markup
 	const article = document.createElement('div');
+	const closeArticle = document.createElement('a');
 	const articleH2 = document.createElement('h2');
 	const articleDate = document.createElement('p');
 	const articleP1 = document.createElement('p');
@@ -118,12 +119,13 @@ function createArticle(item) {
 	const articleBtn = document.createElement('span');
 
 	// 2- Define HTML structure
-	article.append(articleH2, articleDate, articleP1, articleP2, articleP3, articleBtn);
+	article.append(closeArticle, articleH2, articleDate, articleP1, articleP2, articleP3, articleBtn);
 
 	// 3- Add some class names
 	article.classList.add("article");
 	articleDate.classList.add("date");
 	articleBtn.classList.add("expandButton");
+	closeArticle.classList.add("close");
 
 	// 4- Add some content!
 	articleH2.innerText = title;
@@ -131,13 +133,26 @@ function createArticle(item) {
 	articleP1.innerText = p1;
 	articleP2.innerText = p2;
 	articleP3.innerText = p3;
+	closeArticle.innerText = "×";
 
 	articleBtn.innerText = "Read More";
 
 	// 5- Add functionality
 	articleBtn.addEventListener('click', event => {
-		article.classList.toggle('article-open');
+		
+		if (article.classList.contains('article-open')) {
+			article.classList.remove('article-open');
+			article.classList.add('article-close');
+		} else {
+			article.classList.add('article-open');
+			article.classList.remove('article-close');
+		}
+		
 	});
+
+	closeArticle.addEventListener("click", event => {
+		event.target.parentNode.outerHTML = "";
+	})
 
 	return article;
 }
